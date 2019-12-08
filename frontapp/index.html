@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="never">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="Description" content="jsv3">
+    <title>竞赛网</title>
+    <link rel="preload" as="script" href="https://cdn.bootcss.com/vue/2.5.13/vue.min.js">
+    <link rel="preload" as="script" href="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js">
+    <link rel="preload" as="script" href="https://cdn.bootcss.com/axios/0.17.0/axios.min.js">
+    <link rel="preconnect" href="https://hm.baidu.com">
+
+    <link rel="preload" as="script" href="https://cdn.bootcss.com/element-ui/2.4.1/index.js">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/element-ui/2.4.1/theme-chalk/index.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+    <!--<script src="https://code.jquery.com/jquery-3.1.0.js"></script>-->
+
+    <script>
+      var WENT_INTO_ERROR_PAGE = 'WENT_INTO_ERROR_PAGE';//进入ie专用界面的标识符
+      function IEVersion_CP() {
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+        var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器
+        var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器
+        var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+        if(isIE) {
+          var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+          reIE.test(userAgent);
+          var fIEVersion = parseFloat(RegExp["$1"]);
+          switch (fIEVersion){
+            case 7:
+              return 7;
+            case 8:
+              return 8;
+            case 9:
+              return 9;
+            case 10:
+              return 10;
+            default:
+              return 6;
+          }
+        }
+        if(isEdge) {
+          return 'edge';//edge
+        }
+        if(isIE11) {
+          return 11; //IE11
+        }
+        return -1;//不是ie浏览器
+      }
+       var result = IEVersion_CP();
+       if(result > 0 ){
+         if (!localStorage.getItem(WENT_INTO_ERROR_PAGE) || localStorage.getItem(WENT_INTO_ERROR_PAGE) == 'false'){
+           localStorage.setItem(WENT_INTO_ERROR_PAGE,'true');
+           var wantedUrl = 'http://'
+           //本地环境
+           if (document.domain.toLocaleLowerCase().indexOf('localhost') > -1 || document.domain.indexOf('127.0.0.1') > -1 || document.domain.indexOf('192.168') > -1){
+             wantedUrl += 'jsv3-test.hbeducloud.com'
+           }else{
+             //测试和开发环境
+             wantedUrl += document.domain
+             if (location.port.length > 0){
+               wantedUrl += (':' + location.port);
+             }
+           }
+           wantedUrl += '/static/ErrorBrowser/ErrorBrowser.html'
+
+           window.location.href = wantedUrl
+         }
+       }else{
+         localStorage.setItem(WENT_INTO_ERROR_PAGE,'false');
+         document.write('<script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"><\/script>')
+         document.write('<script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js" ><\/script>')
+         document.write('<script src="https://cdn.bootcss.com/axios/0.17.0/axios.min.js"><\/script>')
+         document.write('<script src="https://cdn.bootcss.com/element-ui/2.4.1/index.js"><\/script>')
+       }
+      window.onload = new function () {
+        localStorage.setItem(WENT_INTO_ERROR_PAGE,'false');
+      }
+    </script>
+
+    <!--<% if (htmlWebpackPlugin.options.libCssName){ %>-->
+    <!--<link rel="stylesheet" href="./static/<%= htmlWebpackPlugin.options.libCssName %>">-->
+    <!--<% } %>-->
+
+    <!--<% if (htmlWebpackPlugin.options.libJsName){ %>-->
+    <!--<script src="./static/<%= htmlWebpackPlugin.options.libJsName %>"></script>-->
+    <!--<% } %>-->
+  </body>
+</html>
