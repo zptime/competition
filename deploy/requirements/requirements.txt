@@ -12,7 +12,7 @@ requests==2.9.1
 python-cas==1.2.0
 django-cas-ng==3.5.6
 boto==2.46.1
-lxml==3.7.3
+lxml==4.9.1
 filechunkio==1.8
 bizlog==1.0.1
 rarfile==3.0
