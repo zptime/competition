@@ -1,4 +1,4 @@
-setuptools==31.0.0
+setuptools==65.5.1
 six==1.10
 jdcal==1.3
 et-xmlfile==1.0.1
